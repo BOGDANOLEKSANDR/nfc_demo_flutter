@@ -1,0 +1,71 @@
+name: nfc_demo
+description: demo
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 0.0.18+18
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^1.0.0
+  http: ^0.13.0
+  http_interceptor: ^1.0.1
+  flutter_bloc: ^8.0.0
+  equatable: ^2.0.3
+  bloc: ^8.0.3
+  sizer: ^2.0.15
+  animations: ^2.0.2
+  get_it: ^7.2.0
+  rxdart: ^0.27.3
+  logger: ^1.1.0
+  google_fonts: ^3.0.1
+  collection: ^1.16.0
+  flutter_inappwebview: ^5.4.3+7
+  url_launcher: ^6.1.5
+  responsive_framework: ^0.2.0
+  flutter_launcher_icons: ^0.12.0
+  flutter_nfc_kit: ^3.3.1
+
+dev_dependencies:
+  build_runner: ^2.1.9
+
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+# flutter pub get
+# flutter pub run flutter_launcher_icons
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Dosis
+      fonts:
+        - asset: assets/fonts/Dosis-Regular.ttf
+        - asset: assets/fonts/Dosis-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Dosis-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Dosis-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Dosis-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Dosis-ExtraBold.ttf
+          weight: 800
