@@ -108,12 +108,12 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     }
   }
 
-  void printNDEFRecord(js.JsObject ndefRecord) {
-    final recordType = ndefRecord.callMethod('recordType');
-    final mediaType = ndefRecord.callMethod('mediaType');
-    final data = ndefRecord.callMethod('data');
-    final encoding = ndefRecord.callMethod('encoding');
-    final lang = ndefRecord.callMethod('lang');
+  void printNDEFRecord(ndefRecord) {
+    final recordType = ndefRecord['recordType'];
+    final mediaType = ndefRecord['mediaType'];
+    final data = ndefRecord['data'];
+    final encoding = ndefRecord['encoding'];
+    final lang = ndefRecord['lang'];
 
     setState(() {
     statusMsg += 'Record Type: $recordType \n';
