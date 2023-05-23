@@ -21,6 +21,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
   String statusMsg = '';
+
   // String _platformVersion =
   //     '${Platform.operatingSystem} ${Platform.operatingSystemVersion}';
   // NFCAvailability _availability = NFCAvailability.not_supported;
@@ -58,10 +59,10 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     return js.context.hasProperty('NDEFReader');
   }
 
-
-  void startNFCScan() {
-    final ndef = js.JsObject(js.context['NDEFReader']);
-    ndef.callMethod('scan').then((_) {
+  void startNFCScan() async {
+    try {
+      final ndef = js.JsObject(js.context['NDEFReader']);
+      await ndef.callMethod('scan');
       setState(() {
         statusMsg += "> Scan started\n";
       });
@@ -83,14 +84,12 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           printNDEFRecord(record);
         }
       });
-    }).catchError((error) {
+    } catch (error) {
       setState(() {
         statusMsg += 'Argh! $error \n';
       });
-    });
+    }
   }
-
-
 
   // void startNFCScan() async {
   //   try {
@@ -148,11 +147,11 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     final lang = ndefRecord['lang'];
 
     setState(() {
-    statusMsg += 'Record Type: $recordType \n';
-    statusMsg += 'Media Type: $mediaType \n';
-    statusMsg += 'Data: $data \n';
-    statusMsg += 'Encoding: $encoding \n';
-    statusMsg += 'Language: $lang \n';
+      statusMsg += 'Record Type: $recordType \n';
+      statusMsg += 'Media Type: $mediaType \n';
+      statusMsg += 'Data: $data \n';
+      statusMsg += 'Encoding: $encoding \n';
+      statusMsg += 'Language: $lang \n';
     });
   }
 
@@ -188,14 +187,17 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
                 Text('Nfc Demo', style: context.titleMedium),
                 const SizedBox(height: 16.0),
                 if (!isNDEFReaderSupported()) ...[
-                  Text('Web NFC is not available. Use Chrome on Android.', style: context.bodySmall?.copyWith(color: AppColor.error)),
+                  Text('Web NFC is not available. Use Chrome on Android.',
+                      style: context.bodySmall?.copyWith(color: AppColor.error)),
                 ],
                 if (isNDEFReaderSupported()) ...[
                   TextButton(
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                     ),
-                    onPressed: () { startNFCScan();},
+                    onPressed: () {
+                      startNFCScan();
+                    },
                     child: Text('Start scan'),
                   )
                 ],
@@ -208,46 +210,46 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     );
   }
 
-  // Widget _buildMainScreen() {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       actions: [
-  //         BlocBuilder<LanguageCubit, LanguageState>(
-  //           builder: (context, state) {
-  //             final languageId = state.selectedLanguage.languageId == 1 ? 2 : 1;
-  //             return TextButton(
-  //               onPressed: () {
-  //                 _languageCubit.changeLanguage(languageId);
-  //               },
-  //               child: Text(
-  //                 languageId == 1 ? 'Fi' : 'En',
-  //                 style: context.titleSmall?.copyWith(fontSize: 18),
-  //               ),
-  //             );
-  //           },
-  //         ),
-  //       ],
-  //     ),
-  //     body: Column(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: <Widget>[
-  //         Center(
-  //           child: Image.asset('assets/images/logo2023.jpg', alignment: Alignment.center),
-  //         ),
-  //         Text(
-  //           'urheiluhallit_app_deprecation_msg_title'.tt(context),
-  //           style: context.titleLarge?.copyWith(fontSize: 24.0),
-  //         ),
-  //         Text(
-  //           'urheiluhallit_app_deprecation_msg_body'.tt(context),
-  //           style: context.bodySmall?.copyWith(fontSize: 18.0),
-  //         ),
-  //         const _LinkWidget().paddingOnly(bottom: 16.0),
-  //       ],
-  //     ).paddingSymmetric(horizontal: 32.0, vertical: 16.0),
-  //   );
-  // }
+// Widget _buildMainScreen() {
+//   return Scaffold(
+//     appBar: AppBar(
+//       actions: [
+//         BlocBuilder<LanguageCubit, LanguageState>(
+//           builder: (context, state) {
+//             final languageId = state.selectedLanguage.languageId == 1 ? 2 : 1;
+//             return TextButton(
+//               onPressed: () {
+//                 _languageCubit.changeLanguage(languageId);
+//               },
+//               child: Text(
+//                 languageId == 1 ? 'Fi' : 'En',
+//                 style: context.titleSmall?.copyWith(fontSize: 18),
+//               ),
+//             );
+//           },
+//         ),
+//       ],
+//     ),
+//     body: Column(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: <Widget>[
+//         Center(
+//           child: Image.asset('assets/images/logo2023.jpg', alignment: Alignment.center),
+//         ),
+//         Text(
+//           'urheiluhallit_app_deprecation_msg_title'.tt(context),
+//           style: context.titleLarge?.copyWith(fontSize: 24.0),
+//         ),
+//         Text(
+//           'urheiluhallit_app_deprecation_msg_body'.tt(context),
+//           style: context.bodySmall?.copyWith(fontSize: 18.0),
+//         ),
+//         const _LinkWidget().paddingOnly(bottom: 16.0),
+//       ],
+//     ).paddingSymmetric(horizontal: 32.0, vertical: 16.0),
+//   );
+// }
 }
 
 // class _LinkWidget extends StatelessWidget {
