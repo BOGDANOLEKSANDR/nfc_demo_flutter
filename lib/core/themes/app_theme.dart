@@ -7,12 +7,12 @@ class AppTheme {
 
   static ThemeData lightTheme() {
     final ThemeData theme = ThemeData(
-      useMaterial3: true,
+      // useMaterial3: true,
       brightness: Brightness.light,
       primarySwatch: MaterialColor(AppColor.accent.value, getSwatch(AppColor.accent)),
       fontFamily: 'Dosis',
       primaryColor: AppColor.lightPrimary,
-      backgroundColor: AppColor.lightSecondaryBackground,
+      // backgroundColor: AppColor.lightSecondaryBackground,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: ThemeText.getLightTextTheme(),
       scaffoldBackgroundColor: AppColor.lightBackground,
@@ -44,7 +44,7 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     final ThemeData theme = ThemeData(
-      useMaterial3: true,
+      // useMaterial3: true,
       brightness: Brightness.dark,
       primarySwatch: MaterialColor(AppColor.accent.shade600.value, getSwatch(AppColor.accent.shade600)),
       fontFamily: 'Dosis',

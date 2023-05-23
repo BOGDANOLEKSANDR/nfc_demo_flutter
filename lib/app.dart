@@ -60,7 +60,7 @@ class _OnTheMoveAppState extends State<OnTheMoveApp> with WidgetsBindingObserver
                 builder: (context, child) {
                   return ResponsiveWrapper.builder(
                       BouncingScrollWrapper.builder(context, child!),
-                      maxWidth: 1200,
+                      maxWidth: MediaQuery.of(context).size.width,
                       minWidth: 450,
                       defaultScale: true,
                       breakpoints: [
