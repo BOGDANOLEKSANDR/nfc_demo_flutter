@@ -33,8 +33,8 @@ class _OnTheMoveAppState extends State<OnTheMoveApp> with WidgetsBindingObserver
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    LanguageCubit.get(context).getLanguages().listen((_) {});
-    AppTheme.setStatusBarAndNavigationBarColors(ThemeMode.light);
+    // LanguageCubit.get(context).getLanguages().listen((_) {});
+    // AppTheme.setStatusBarAndNavigationBarColors(ThemeMode.light);
     super.initState();
   }
 
