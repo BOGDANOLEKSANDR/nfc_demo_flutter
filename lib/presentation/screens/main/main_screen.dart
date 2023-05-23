@@ -89,11 +89,12 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           setState(() {
             statusMsg += "> Serial Number: $serialNumber \n";
             statusMsg += "> Records: (${records.length}) \n";
+          });
             // statusMsg += "> ${message['records']} \n";
             for (final record in records) {
               printNDEFRecord(record);
             }
-          });
+
 
           // log("> Serial Number: $serialNumber");
           // log("> Records: (${message['records'].length})");
@@ -114,11 +115,13 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     final encoding = ndefRecord.callMethod('encoding');
     final lang = ndefRecord.callMethod('lang');
 
+    setState(() {
     statusMsg += 'Record Type: $recordType \n';
     statusMsg += 'Media Type: $mediaType \n';
     statusMsg += 'Data: $data \n';
     statusMsg += 'Encoding: $encoding \n';
     statusMsg += 'Language: $lang \n';
+    });
   }
 
   @override
