@@ -65,12 +65,12 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       setState(() {
         statusMsg += "> Scan started\n";
       });
-      ndef['onreadingerror'] = (event) {
+      ndef['onreadingerror'] = js.JsFunction.withThis((event) {
         setState(() {
           statusMsg += "Argh! Cannot read data from the NFC tag. Try another one?\n";
         });
-      };
-      ndef['onreading'] = (event) {
+      });
+      ndef['onreading'] = js.JsFunction.withThis((event) {
         final message = event['message'];
         final serialNumber = event['serialNumber'];
         final records = message['records'];
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         for (final record in records) {
           printNDEFRecord(record);
         }
-      };
+      });
     }).catchError((error) {
       setState(() {
         statusMsg += 'Argh! $error \n';
