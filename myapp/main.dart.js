@@ -62452,9 +62452,12 @@ s=this.a
 s.aj(new A.a9o(s,q,r))},
 $S:8}
 A.a9o.prototype={
-$0(){var s=this.a,r="> Serial Number: "+A.h(this.b)+" \n"
-s.d=r
-s.d=r+("> Records: ("+A.h(J.bp(J.av(this.c,"records")))+")")},
+$0(){var s,r=this.a,q="> Serial Number: "+A.h(this.b)+" \n"
+r.d=q
+s=this.c
+q+="> Records: ("+A.h(J.bp(J.av(s,"records")))+") \n"
+r.d=q
+r.d=q+("> Message: "+A.h(s))},
 $S:0}
 A.a9t.prototype={
 $0(){this.a.d="Argh! "+A.h(this.b)},
