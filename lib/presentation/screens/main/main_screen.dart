@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nfc_demo/common_libs.dart';
@@ -59,54 +61,86 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   }
 
 
-  void startNFCScan() async {
-    try {
-      final ndefConstructor = js.context['NDEFReader'];
-      final ndefInstance = js.JsObject(ndefConstructor);
-
-      await ndefInstance.callMethod('scan');
-
+  void startNFCScan() {
+    final ndef = JsObject(context['NDEFReader']);
+    ndef.callMethod('scan').then((_) {
       setState(() {
         statusMsg += "> Scan started\n";
       });
-
-
-      ndefInstance.callMethod('addEventListener', [
-        'readingError',
-        js.allowInterop((event) {
-          setState(() {
-            statusMsg += "Argh! Cannot read data from the NFC tag. Try another one?\n";
-          });
-        }),
-      ]);
-
-      ndefInstance.callMethod('addEventListener', [
-        'reading',
-        js.allowInterop((event) {
-          final message = event['message'];
-          final serialNumber = event['serialNumber'];
-          final records = message['records'];
-          setState(() {
-            statusMsg += "> Serial Number: $serialNumber \n";
-            statusMsg += "> Records: (${records.length}) \n";
-          });
-            // statusMsg += "> ${message['records']} \n";
-            for (final record in records) {
-              printNDEFRecord(record);
-            }
-
-
-          // log("> Serial Number: $serialNumber");
-          // log("> Records: (${message['records'].length})");
-        }),
-      ]);
-    } catch (error) {
+      ndef['onreadingerror'] = (event) {
+        setState(() {
+          statusMsg += "Argh! Cannot read data from the NFC tag. Try another one?\n";
+        });
+      };
+      ndef['onreading'] = (event) {
+        final message = event['message'];
+        final serialNumber = event['serialNumber'];
+        final records = message['records'];
+        setState(() {
+          statusMsg += "> Serial Number: $serialNumber \n";
+          statusMsg += "> Records: (${records.length}) \n";
+        });
+        // statusMsg += "> ${message['records']} \n";
+        for (final record in records) {
+          printNDEFRecord(record);
+        }
+      };
+    }).catchError((error) {
       setState(() {
         statusMsg += 'Argh! $error \n';
       });
-      // log("Argh! $error");
-    }
+    });
   }
+
+
+
+  // void startNFCScan() async {
+  //   try {
+  //     final ndefConstructor = js.context['NDEFReader'];
+  //     final ndefInstance = js.JsObject(ndefConstructor);
+  //
+  //     await ndefInstance.callMethod('scan');
+  //
+  //     setState(() {
+  //       statusMsg += "> Scan started\n";
+  //     });
+  //
+  //     ndefInstance.callMethod('addEventListener', [
+  //       'readingerror',
+  //       js.allowInterop((event) {
+  //         setState(() {
+  //           statusMsg += "Argh! Cannot read data from the NFC tag. Try another one?\n";
+  //         });
+  //       }),
+  //     ]);
+  //
+  //     ndefInstance.callMethod('addEventListener', [
+  //       'reading',
+  //       js.allowInterop((event) {
+  //         final message = event['message'];
+  //         final serialNumber = event['serialNumber'];
+  //         final records = message['records'];
+  //         setState(() {
+  //           statusMsg += "> Serial Number: $serialNumber \n";
+  //           statusMsg += "> Records: (${records.length}) \n";
+  //         });
+  //           // statusMsg += "> ${message['records']} \n";
+  //           for (final record in records) {
+  //             printNDEFRecord(record);
+  //           }
+  //
+  //
+  //         // log("> Serial Number: $serialNumber");
+  //         // log("> Records: (${message['records'].length})");
+  //       }),
+  //     ]);
+  //   } catch (error) {
+  //     setState(() {
+  //       statusMsg += 'Argh! $error \n';
+  //     });
+  //     // log("Argh! $error");
+  //   }
+  // }
 
   void printNDEFRecord(ndefRecord) {
     final recordType = ndefRecord['recordType'];
