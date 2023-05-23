@@ -67,7 +67,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       await ndefInstance.callMethod('scan');
 
       setState(() {
-        statusMsg = "> Scan started";
+        statusMsg += "> Scan started\n";
       });
 
 
@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         'readingerror',
         js.allowInterop(() {
           setState(() {
-            statusMsg = "Argh! Cannot read data from the NFC tag. Try another one?";
+            statusMsg += "Argh! Cannot read data from the NFC tag. Try another one?\n";
           });
         }),
       ]);
@@ -87,7 +87,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           final serialNumber = event['serialNumber'];
           final records = message['records'];
           setState(() {
-            statusMsg = "> Serial Number: $serialNumber \n";
+            statusMsg += "> Serial Number: $serialNumber \n";
             statusMsg += "> Records: (${records.length}) \n";
             // statusMsg += "> ${message['records']} \n";
             for (final record in records) {
@@ -101,7 +101,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       ]);
     } catch (error) {
       setState(() {
-        statusMsg = "Argh! $error";
+        statusMsg += 'Argh! $error \n';
       });
       // log("Argh! $error");
     }
@@ -114,11 +114,11 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     final encoding = ndefRecord.callMethod('encoding');
     final lang = ndefRecord.callMethod('lang');
 
-    print('Record Type: $recordType');
-    print('Media Type: $mediaType');
-    print('Data: $data');
-    print('Encoding: $encoding');
-    print('Language: $lang');
+    statusMsg += 'Record Type: $recordType \n';
+    statusMsg += 'Media Type: $mediaType \n';
+    statusMsg += 'Data: $data \n';
+    statusMsg += 'Encoding: $encoding \n';
+    statusMsg += 'Language: $lang \n';
   }
 
   @override
