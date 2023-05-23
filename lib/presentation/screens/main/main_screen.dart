@@ -85,10 +85,14 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         js.allowInterop((event) {
           final message = event['message'];
           final serialNumber = event['serialNumber'];
+          final records = message['records'];
           setState(() {
             statusMsg = "> Serial Number: $serialNumber \n";
-            statusMsg += "> Records: (${message['records'].length}) \n";
-            statusMsg += "> ${message['records']} \n";
+            statusMsg += "> Records: (${records.length}) \n";
+            // statusMsg += "> ${message['records']} \n";
+            for (final record in records) {
+              printNDEFRecord(record);
+            }
           });
 
           // log("> Serial Number: $serialNumber");
@@ -101,6 +105,20 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       });
       // log("Argh! $error");
     }
+  }
+
+  void printNDEFRecord(js.JsObject ndefRecord) {
+    final recordType = ndefRecord.callMethod('recordType');
+    final mediaType = ndefRecord.callMethod('mediaType');
+    final data = ndefRecord.callMethod('data');
+    final encoding = ndefRecord.callMethod('encoding');
+    final lang = ndefRecord.callMethod('lang');
+
+    print('Record Type: $recordType');
+    print('Media Type: $mediaType');
+    print('Data: $data');
+    print('Encoding: $encoding');
+    print('Language: $lang');
   }
 
   @override
