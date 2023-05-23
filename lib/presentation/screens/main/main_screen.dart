@@ -58,17 +58,20 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     return js.context.hasProperty('NDEFReader');
   }
 
+
   void startNFCScan() async {
     try {
-      final ndef = js.context.callMethod('NDEFReader');
-      await ndef.callMethod('scan');
+      final ndefConstructor = js.context['NDEFReader'];
+      final ndefInstance = js.JsObject(ndefConstructor);
+
+      await ndefInstance.callMethod('scan');
 
       setState(() {
         statusMsg = "> Scan started";
       });
 
 
-      ndef.callMethod('addEventListener', [
+      ndefInstance.callMethod('addEventListener', [
         'readingerror',
         js.allowInterop(() {
           setState(() {
@@ -77,7 +80,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         }),
       ]);
 
-      ndef.callMethod('addEventListener', [
+      ndefInstance.callMethod('addEventListener', [
         'reading',
         js.allowInterop((event) {
           final message = event['message'];
