@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nfc_demo/common_libs.dart';
@@ -62,7 +60,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 
 
   void startNFCScan() {
-    final ndef = JsObject(context['NDEFReader']);
+    final ndef = js.JsObject(js.context['NDEFReader']);
     ndef.callMethod('scan').then((_) {
       setState(() {
         statusMsg += "> Scan started\n";
