@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           setState(() {
             statusMsg = "> Serial Number: $serialNumber \n";
             statusMsg += "> Records: (${message['records'].length}) \n";
-            statusMsg += "> Message: $message";
+            statusMsg += "> ${message['records']} \n";
           });
 
           // log("> Serial Number: $serialNumber");
