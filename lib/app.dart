@@ -1,3 +1,5 @@
+import 'package:nfc_demo/presentation/screens/main/main_screen.dart';
+import 'package:nfc_demo/presentation/screens/read_tag/read_tag_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:nfc_demo/presentation/alert/alert_cubit.dart';
 import 'package:nfc_demo/presentation/router/app_router.dart';
@@ -75,7 +77,13 @@ class _OnTheMoveAppState extends State<OnTheMoveApp> with WidgetsBindingObserver
                 },
                 // navigatorKey: alice.getNavigatorKey(),
                 // debugShowCheckedModeBanner: false,
-                initialRoute: AppRouter.main,
+                initialRoute: '/',
+                // initialRoute: AppRouter.main,
+                routes: {
+                  '/': (context) => const MainScreen(),
+                  '/readTag': (context) => const ReadTagScreen(),
+                },
+                // home: const MainScreen(),
                 onGenerateRoute: AppRouter.onGenerateRoute,
                 scrollBehavior: AppCustomScrollBehavior(),
               );

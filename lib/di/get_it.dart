@@ -5,6 +5,7 @@ import 'package:nfc_demo/data/http/http_client.dart';
 import 'package:nfc_demo/logic/language/language_cubit.dart';
 import 'package:nfc_demo/logic/translation_cubit.dart';
 import 'package:nfc_demo/presentation/alert/alert_cubit.dart';
+import 'package:nfc_demo/presentation/screens/read_tag/read_tag_cubit.dart';
 
 final getIt = GetIt.I;
 
@@ -34,4 +35,6 @@ void init() {
     languageCubit: getIt(),
     translationService: getIt(),
   ));
+
+  getIt.registerFactory(() => ReadTagCubit());
 }
