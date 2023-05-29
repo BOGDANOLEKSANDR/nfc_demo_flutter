@@ -25,7 +25,6 @@ class ReadTagScreen extends StatefulWidget {
 
 class _ReadTagScreenState extends State<ReadTagScreen> with SingleTickerProviderStateMixin {
   late ReadTagCubit _readTagCubit;
-  String statusMsg = '';
 
   // String _platformVersion =
   //     '${Platform.operatingSystem} ${Platform.operatingSystemVersion}';
@@ -201,7 +200,7 @@ class _ReadTagScreenState extends State<ReadTagScreen> with SingleTickerProvider
                     //     child: Text('Start scan'),
                     //   )
                     // ],
-                    Text(statusMsg, style: context.bodySmall),
+                    Text('${state.details}', style: context.bodySmall),
                   ],
                 );
               },
